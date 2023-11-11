@@ -9,8 +9,8 @@ To install the application, you need to have Python 3.6 or higher installed on y
 Once you have Python and Poetry installed, you can install the application by cloning the repository and installing the dependencies:
 
 ```bash
-git clone https://github.com/yourusername/my-fastapi-app.git
-cd my-fastapi-app
+git clone https://github.com/Diego22rct/TrabajoFinal-Complejidad-Algoritmica-Backend.git
+cd TrabajoFinal-Complejidad-Algoritmica-Backend
 poetry install
 ```
 
