@@ -23,6 +23,15 @@ def search_anime(anime_name: str):
     return None
 
 
+def search_anime_by_id(id: int):
+    # buscar en el dataset
+    # retornar el anime
+    for index, row in df_anime.iterrows():
+        if row["anime_id"] == id:
+            return row
+    return None
+
+
 @router.get("/hello")
 async def root():
     return {"message": "Hello, World!"}
@@ -35,4 +44,16 @@ async def root(anime_name: str):
 
     anime = search_anime(anime_name)
     print(anime)
+    if anime is None:
+        return {"Response": "No se encontro el anime"}
+    return {"anime": anime}
+
+
+@router.get("/anime/id/{id}")
+async def root(id: int):
+    # buscar en el dataset
+    # retornar el anime
+    anime = search_anime_by_id(id)
+    if anime is None:
+        return {"Response": "No se encontro el anime"}
     return {"anime": anime}

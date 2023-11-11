@@ -15,4 +15,9 @@ app.include_router(index_router.router)
 if __name__ == "__main__":
     import uvicorn
 
+    # before run test
+    import pytest
+
+    pytest.main(["-s", "-v", "--disable-warnings"])
+
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
