@@ -53,13 +53,13 @@ async def anime_id(id: int):
 @router.get("/anime/genre/{genre}")
 async def anime_genre(genre: str):
     """
-    Returns a list of animes that belong to the specified genre.
+    Retorna una lista de animes que pertenecen al genero especificado.
 
     Args:
-    - genre (str): The genre to search for.
+    - genre (str): El genero del anime que se desea buscar.
 
     Returns:
-    - dict: A dictionary containing a list of animes that belong to the specified genre.
+    - dict: Un diccionario con la lista de animes que pertenecen al genero especificado.
     """
     list_animes = []
     for index, row in df_anime.iterrows():
