@@ -48,3 +48,14 @@ async def anime_id(id: int):
     if anime is None:
         return {"Response": "No se encontro el anime"}
     return {"anime": anime}
+
+
+@router.get("/anime/genre/{genre}")
+async def anime_genre(genre: str):
+    list_animes = []
+    for index, row in df_anime.iterrows():
+        if genre in row["Genres"]:
+            list_animes.append(row)
+    if len(list_animes) == 0:
+        return {"Response": "No se encontro el anime"}
+    return {"anime": list_animes}
