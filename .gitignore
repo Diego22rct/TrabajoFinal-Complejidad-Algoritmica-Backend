@@ -1,0 +1,8 @@
+# Ignorar la carpeta __pycache__
+__pycache__/
+
+# Ignorar los archivos .pyc
+*.pyc
+
+# Ignorar la carpeta .vscode si estás utilizando Visual Studio Code
+.vscode/
