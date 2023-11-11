@@ -33,12 +33,12 @@ def search_anime_by_id(id: int):
 
 
 @router.get("/hello")
-async def root():
+async def hello():
     return {"message": "Hello, World!"}
 
 
 @router.get("/anime/{anime_name}")
-async def root(anime_name: str):
+async def anime_name(anime_name: str):
     # buscar en el dataset
     # retornar el anime
 
@@ -50,7 +50,7 @@ async def root(anime_name: str):
 
 
 @router.get("/anime/id/{id}")
-async def root(id: int):
+async def anime_id(id: int):
     # buscar en el dataset
     # retornar el anime
     anime = search_anime_by_id(id)
