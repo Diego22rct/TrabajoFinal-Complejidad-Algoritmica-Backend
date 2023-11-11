@@ -15,8 +15,6 @@ router = APIRouter()
 
 
 def search_anime(anime_name: str):
-    # buscar en el dataset
-    # retornar el anime
     for index, row in df_anime.iterrows():
         if row["Name"] == anime_name:
             return row
@@ -24,8 +22,6 @@ def search_anime(anime_name: str):
 
 
 def search_anime_by_id(id: int):
-    # buscar en el dataset
-    # retornar el anime
     for index, row in df_anime.iterrows():
         if row["anime_id"] == id:
             return row
@@ -39,9 +35,6 @@ async def hello():
 
 @router.get("/anime/{anime_name}")
 async def anime_name(anime_name: str):
-    # buscar en el dataset
-    # retornar el anime
-
     anime = search_anime(anime_name)
     print(anime)
     if anime is None:
@@ -51,9 +44,27 @@ async def anime_name(anime_name: str):
 
 @router.get("/anime/id/{id}")
 async def anime_id(id: int):
-    # buscar en el dataset
-    # retornar el anime
     anime = search_anime_by_id(id)
     if anime is None:
         return {"Response": "No se encontro el anime"}
     return {"anime": anime}
+
+
+@router.get("/anime/genre/{genre}")
+async def anime_genre(genre: str):
+    """
+    Retorna una lista de animes que pertenecen al genero especificado.
+
+    Args:
+    - genre (str): El genero del anime que se desea buscar.
+
+    Returns:
+    - dict: Un diccionario con la lista de animes que pertenecen al genero especificado.
+    """
+    list_animes = []
+    for index, row in df_anime.iterrows():
+        if genre in row["Genres"]:
+            list_animes.append(row)
+    if len(list_animes) == 0:
+        return {"Response": "Genero no encontrado"}
+    return {"anime": list_animes}
