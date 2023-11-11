@@ -57,5 +57,5 @@ async def anime_genre(genre: str):
         if genre in row["Genres"]:
             list_animes.append(row)
     if len(list_animes) == 0:
-        return {"Response": "No se encontro el anime"}
+        return {"Response": "Genero no encontrado"}
     return {"anime": list_animes}
