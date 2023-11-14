@@ -12,3 +12,4 @@ def read_root():
 
 
 app.include_router(index_router.router)
+app.include_router(graph_router.router)

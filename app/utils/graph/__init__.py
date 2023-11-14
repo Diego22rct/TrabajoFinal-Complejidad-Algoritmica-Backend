@@ -52,27 +52,29 @@ class Grafo:
         graf_to_dict = pd.dict(self.graph)
         graf_to_dict.to_csv("graph_matrix", encoding="utf-8", index=False)
 
-    def importGraphFromFile(self):
+    def importGraphFromFile(self, file_path):
         """
         TODO: arreglar la importacion desde el archivo
         """
         self.graph = {}  # Limpiar el grafo actual
-        inice = 1
-        with open("app/assets/graph__file/grafo.txt", encoding="utf-8") as file:
-            for line in file:
-                parts = line.strip().split(": {", 1)
-                inice += 1
-                # if len(parts) == 2:
-                node, value_str = parts
+        node_count = 1
+        try:
+            with open(file_path, encoding="utf-8") as file:
+                for line in file:
+                    parts = line.strip().split(": {", 1)
+                    node_count += 1
+                    node, value_str = parts
 
-                self.addNode(node)
-                for edge in value_str.split(", "):
-                    edge_parts = edge.strip().split(" ", 1)
-                    if len(edge_parts) == 2:
-                        fin, peso = edge_parts
-                        peso = peso[:-1]
-                        self.addEdge(node, fin, peso)
+                    self.addNode(node)
+                    for edge in value_str.split(", "):
+                        edge_parts = edge.strip().split(" ", 1)
+                        if len(edge_parts) == 2:
+                            fin, peso = edge_parts
+                            peso = peso[:-1]
+                            self.addEdge(node, fin, peso)
+        except FileNotFoundError:
+            print("File not found")
+        except Exception as e:
+            print("Error occurred:", str(e))
 
-        print("Se agrego ", inice, " nodos al grafo")
-
-    # self.printGraph()
+        return node_count
