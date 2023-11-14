@@ -1,6 +1,5 @@
 import pandas as pd
 
-
 class Grafo:
     def __init__(self):
         self.graph = {}
@@ -33,3 +32,14 @@ class Grafo:
 
         # Export the DataFrame to a CSV file
         df.to_csv(filename, encoding="utf-8", index=False)
+      
+    def exportGraphToDict(self):
+        """
+        Export the graph to a dictionary.
+
+        Returns:
+            dict: The graph dictionary.
+        """
+        graf_to_dict = pd.dict(self.graph)
+        graf_to_dict.to_csv("graph_matrix", encoding="utf-8", index=False)
+        
