@@ -1,4 +1,4 @@
-import math
+import pandas as pd
 
 
 def similarity(anime1, anime2):

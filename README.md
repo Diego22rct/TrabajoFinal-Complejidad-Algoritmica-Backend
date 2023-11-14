@@ -12,7 +12,6 @@ Once you have Python and Poetry installed, you can install the application by cl
 git clone https://github.com/Diego22rct/TrabajoFinal-Complejidad-Algoritmica-Backend.git
 cd TrabajoFinal-Complejidad-Algoritmica-Backend
 poetry install
-pip install pandas 
 ```
 
 ## Usage

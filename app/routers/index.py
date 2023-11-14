@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 import pandas as pd
 
-numero_de_animes = 1000
+numero_de_animes = 100
 
 df_anime = pd.read_csv(
     "app/assets/dataset/anime-dataset-2023.csv",

@@ -12,6 +12,9 @@ def read_root():
 
 app.include_router(index_router.router)
 
+
+#coment to run with the command in the readme
+"""
 if __name__ == "__main__":
     import uvicorn
 
@@ -21,3 +24,4 @@ if __name__ == "__main__":
     pytest.main(["-s", "-v", "--disable-warnings"])
 
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+"""
