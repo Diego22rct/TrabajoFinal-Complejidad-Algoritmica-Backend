@@ -5,9 +5,10 @@ description = "FastAPI application that returns data from a graph"
 authors = ["Diego22rct"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = ">=3.9"
 fastapi = "^0.63.0"
 uvicorn = "^0.13.4"
+pandas = "^2.1.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.2"
