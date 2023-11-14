@@ -9,7 +9,7 @@ df_anime = pd.read_csv(
     nrows=numero_de_animes,
 )
 print("Tamaño del dataset: ", df_anime.shape)
-print("primera fila del dataset: ", df_anime.iloc[0])
+print("Dataset cargado correctamente")
 
 router = APIRouter()
 

@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 class Grafo:
     def __init__(self):
         self.graph = {}
@@ -25,9 +26,6 @@ class Grafo:
                 print(f"  {indice_nodo2}. {edge} ({weight})")
                 indice_nodo2 += 1
             indice_linea += 1
-            
-            
-
 
     def exportTo(self, filename):
         """
@@ -43,7 +41,7 @@ class Grafo:
 
         # Export the DataFrame to a CSV file
         df.to_csv(filename, encoding="utf-8", index=False)
-      
+
     def exportGraphToDict(self):
         """
         Export the graph to a dictionary.
@@ -53,26 +51,28 @@ class Grafo:
         """
         graf_to_dict = pd.dict(self.graph)
         graf_to_dict.to_csv("graph_matrix", encoding="utf-8", index=False)
-        
+
     def importGraphFromFile(self):
         """
-          TODO: arreglar la importacion desde el archivo
+        TODO: arreglar la importacion desde el archivo
         """
         self.graph = {}  # Limpiar el grafo actual
+        inice = 1
         with open("app/assets/graph__file/grafo.txt", encoding="utf-8") as file:
             for line in file:
                 parts = line.strip().split(": {", 1)
-                print(parts)
-                #if len(parts) == 2:
+                inice += 1
+                # if len(parts) == 2:
                 node, value_str = parts
-                
+
                 self.addNode(node)
                 for edge in value_str.split(", "):
-                    edge_parts = edge.strip().split(" (", 1)
+                    edge_parts = edge.strip().split(" ", 1)
                     if len(edge_parts) == 2:
                         fin, peso = edge_parts
                         peso = peso[:-1]
                         self.addEdge(node, fin, peso)
 
-       # self.printGraph()
-                    
+        print("Se agrego ", inice, " nodos al grafo")
+
+    # self.printGraph()
