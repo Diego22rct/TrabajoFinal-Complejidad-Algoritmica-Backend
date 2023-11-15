@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "TrabajoFinal-Complejidad-Algoritmica-Backend"
 version = "0.1.0"
-description = "FastAPI application that returns data from a graph"
+description = "FastAPI application from backend to make operations in graph"
 authors = ["Diego22rct"]
 
 [tool.poetry.dependencies]
