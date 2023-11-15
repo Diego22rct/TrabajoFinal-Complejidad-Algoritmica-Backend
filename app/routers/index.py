@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 import pandas as pd
 
-numero_de_animes = 100
+numero_de_animes = 10000
 
 df_anime = pd.read_csv(
     "app/assets/dataset/anime-dataset-2023.csv",
@@ -10,6 +10,7 @@ df_anime = pd.read_csv(
 )
 print("Tamaño del dataset: ", df_anime.shape)
 print("Dataset cargado correctamente")
+
 
 router = APIRouter()
 

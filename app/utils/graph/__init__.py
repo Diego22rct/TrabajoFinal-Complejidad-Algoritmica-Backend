@@ -1,80 +1,89 @@
 import pandas as pd
+from typing import Dict, List, Tuple
 
 
 class Grafo:
     def __init__(self):
         self.graph = {}
 
-    def addNode(self, node):
+    def add_node(self, node):
         if node not in self.graph:
             self.graph[node] = {}
 
-    def addEdge(self, origen, fin, peso):
-        self.addNode(origen)
-        self.addNode(fin)
+    def add_edge(self, origen, fin, peso):
+        self.add_node(origen)
+        self.add_node(fin)
         self.graph[origen][fin] = peso
         self.graph[fin][origen] = peso
 
-    def printGraph(self):
-        # imprimir un inidice comenzando en 1 luego el nodo y sus adyacentes
+    def print_graph(self):
         print("Grafo:")
-        indice_linea = 1
-        for node, edges in self.graph.items():
-            indice_nodo2 = 1
-            print(f"{indice_linea}: {node}:")
-            for edge, weight in edges.items():
-                print(f"  {indice_nodo2}. {edge} ({weight})")
-                indice_nodo2 += 1
-            indice_linea += 1
+        for indice_linea, node in enumerate(self.graph, start=1):
+            print(indice_linea, node, self.graph[node])
 
-    def exportTo(self, filename):
-        """
-        Export the graph to a CSV file with utf-8 encoding.
-
-        Args:
-            filename (str): The name of the file to export to.
-        """
-
-        # Create a DatzaFrame from the graph dictionary
+    def export_to(self, filename):
         df = pd.DataFrame.from_dict(self.graph, orient="index").stack().reset_index()
         df.columns = ["Source", "Target", "Weight"]
-
-        # Export the DataFrame to a CSV file
         df.to_csv(filename, encoding="utf-8", index=False)
 
-    def exportGraphToDict(self):
-        """
-        Export the graph to a dictionary.
+    def export_graph_to_dict(self):
+        return self.graph
 
-        Returns:
-            dict: The graph dictionary.
+    def import_graph_from_file(self, file_path):
         """
-        graf_to_dict = pd.dict(self.graph)
-        graf_to_dict.to_csv("graph_matrix", encoding="utf-8", index=False)
-
-    def importGraphFromFile(self, file_path):
+        TODO: Cambiar el sistema para importar el grafo, cambiar a csv
         """
-        TODO: arreglar la importacion desde el archivo
-        """
-        self.graph = {}  # Limpiar el grafo actual
-        node_count = 1
+        self.graph = {}
+        node_count = 0
         try:
-            with open(file_path, encoding="utf-8") as file:
-                for line in file:
-                    parts = line.strip().split(": {", 1)
-                    node_count += 1
-                    node, value_str = parts
-
-                    self.addNode(node)
-                    for edge in value_str.split(", "):
-                        edge_parts = edge.strip().split(" ", 1)
-                        if len(edge_parts) == 2:
-                            fin, peso = edge_parts
-                            peso = peso[:-1]
-                            self.addEdge(node, fin, peso)
+            df = pd.read_csv(file_path)
+            for index, row in df.iterrows():
+                origen = row["Source"]
+                fin = row["Target"]
+                peso = row["Weight"]
+                self.add_edge(origen, fin, float(peso))
+                node_count += 1
         except FileNotFoundError:
             print("File not found")
         except Exception as e:
             print("Error occurred:", str(e))
 
         return node_count
+
+    def dijkstra_shortest_path(
+        self, start: str, end: str
+    ) -> Tuple[List[str], List[str]]:
+        distances = {node: float("inf") for node in self.graph}
+        distances[start] = 0
+
+        previous_nodes = {node: None for node in self.graph}
+
+        unvisited_nodes = set(self.graph)
+
+        visited_nodes = []
+
+        while unvisited_nodes:
+            current_node = min(unvisited_nodes, key=lambda node: distances[node])
+            visited_nodes.append(current_node)
+
+            if current_node == end:
+                break
+
+            unvisited_nodes.remove(current_node)
+
+            for neighbor, weight in self.graph[current_node].items():
+                distance = distances[current_node] + int(weight)
+
+                if distance < distances[neighbor]:
+                    distances[neighbor] = distance
+                    previous_nodes[neighbor] = current_node
+
+        shortest_path = []
+        current_node = end
+        while previous_nodes[current_node] is not None:
+            shortest_path.append(current_node)
+            current_node = previous_nodes[current_node]
+        shortest_path.append(start)
+        shortest_path.reverse()
+
+        return shortest_path, visited_nodes
