@@ -43,3 +43,15 @@ async def dijkstra_shortest_path(start, end):
     if short_path and _ is None:
         return {"error": "No se encontro el camino"}
     return {"animes_recomendados": short_path, "animes_consultados": _}
+
+
+@router.get("/animes/setup")
+async def setup():
+    """
+    Carga los datos de los animes desde un archivo CSV.
+
+    Returns:
+    dict: Un diccionario que contiene el total de animes cargados.
+    """
+    resultado = grafo.kruskal()
+    return {"kruskal": resultado}
