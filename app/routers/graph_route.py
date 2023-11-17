@@ -34,7 +34,12 @@ async def dijkstra_shortest_path(start, end):
     Returns:
         dict: Un diccionario que contiene los animes recomendados y los animes consultados.
     """
+    if start not in grafo.graph:
+        return {"error": f"Anime '{start}' not found"}
+    if end not in grafo.graph:
+        return {"error": f"Anime '{end}' not found"}
+
     short_path, _ = grafo.dijkstra_shortest_path(start, end)
-    if short_path is None:
+    if short_path and _ is None:
         return {"error": "No se encontro el camino"}
     return {"animes_recomendados": short_path, "animes_consultados": _}
