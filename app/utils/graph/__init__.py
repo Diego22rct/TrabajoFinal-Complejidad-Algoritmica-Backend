@@ -87,3 +87,44 @@ class Grafo:
         shortest_path.reverse()
 
         return shortest_path, visited_nodes
+
+    def find(self, parent, i):
+        if parent[i] == i:
+            return i
+        return self.find(parent, parent[i])
+
+    def union(self, parent, rank, x, y):
+        xroot = self.find(parent, x)
+        yroot = self.find(parent, y)
+        if rank[xroot] < rank[yroot]:
+            parent[xroot] = yroot
+        elif rank[xroot] > rank[yroot]:
+            parent[yroot] = xroot
+        else:
+            parent[yroot] = xroot
+            rank[xroot] += 1
+
+    def kruskal(self):
+        result = []
+        i, e = 0, 0
+        edges = []
+        for node in self.graph:
+            for neighbor, weight in self.graph[node].items():
+                edges.append((node, neighbor, weight))
+        edges = sorted(edges, key=lambda item: item[2])  # Sort the edges list
+        parent = {node: node for node in self.graph}
+        rank = {node: 0 for node in self.graph}
+        idx = 0
+        while (
+            e < len(self.graph) - 1 and i < len(edges) and idx <= 20
+        ):  # Add a condition to check if i is within the range of edges
+            u, v, w = edges[i]
+            i = i + 1
+            x = self.find(parent, u)
+            y = self.find(parent, v)
+            if x != y:
+                e = e + 1
+                result.append((u, v, w))
+                self.union(parent, rank, x, y)
+                idx += 1
+        return result

@@ -78,7 +78,7 @@ async def anime_name(anime_name: str):
     return {"anime": anime}
 
 
-@router.get("/anime/id/{id}")
+@router.get("/anime/{id}")
 async def anime_id(id: int):
     """
     Busca un anime por su ID.
@@ -95,7 +95,7 @@ async def anime_id(id: int):
     return {"anime": anime}
 
 
-@router.get("/anime/genre/{genre}")
+@router.get("/anime/{genre}")
 async def anime_genre(genre: str):
     """
     Retorna una lista de animes que pertenecen al genero especificado.
