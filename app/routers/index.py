@@ -14,11 +14,6 @@ print("Tamaño del dataset: ", df_anime.shape)
 print("Dataset cargado correctamente")
 
 
-router = APIRouter()
-
-router.include_router(graph_router.router)
-
-
 def search_anime(anime_name: str):
     """
     Busca un anime en el dataframe df_anime por su nombre.
@@ -50,6 +45,9 @@ def search_anime_by_id(id: int):
         if row["anime_id"] == id:
             return row
     return None
+
+
+router = APIRouter()
 
 
 @router.get("/anime/name/{anime_name}")
