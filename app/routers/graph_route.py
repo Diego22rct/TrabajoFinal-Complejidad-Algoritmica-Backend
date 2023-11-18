@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 import pandas as pd
 from app.utils.graph import Grafo
+from .index import df_anime
 
 grafo = Grafo()
 
@@ -9,17 +10,6 @@ total_cargado = grafo.import_graph_from_file("app/assets/graph__file/grafo_anime
 # grafo.print_graph()
 
 router = APIRouter()
-
-
-@router.get("/graph")
-async def get_graph():
-    """
-    Returns a dictionary containing the graph data.
-
-    Returns:
-    dict: A dictionary containing the graph data.
-    """
-    return {"graph": total_cargado}
 
 
 @router.get("/anime/two_recomend/{start}/{end}")
@@ -40,18 +30,43 @@ async def dijkstra_shortest_path(start, end):
         return {"error": f"Anime '{end}' not found"}
 
     short_path, _ = grafo.dijkstra_shortest_path(start, end)
+
+    if len(short_path) <= 4:
+        short_path = _[:6]
+        _ = _[6:]
+
+    # buscar en df_anime los animes en short_path
+    animes_encontrados = []
+    for anime in df_anime.iterrows():
+        if anime[1]["Name"] in short_path:
+            animes_encontrados.append(anime[1])
+
+    # Remove None values from the list
+    animes_encontrados = [anime for anime in animes_encontrados if anime is not None]
+
     if short_path and _ is None:
         return {"error": "No se encontro el camino"}
-    return {"animes_recomendados": short_path, "animes_consultados": _}
+    return {"animes_encontrados": animes_encontrados, "animes_consultados": _}
 
 
 @router.get("/animes/setup")
 async def setup():
     """
-    Carga los datos de los animes desde un archivo CSV.
+    Usa el algorimo de Kruskal para generar unas recomendaciones iniciales de los animes.
 
     Returns:
-    dict: Un diccionario que contiene el total de animes cargados.
+        animes: {
+            0: {
+                Info anime 1
+            }
+            ...
+        }
     """
     resultado = grafo.kruskal()
-    return {"kruskal": resultado}
+
+    resultado_list = []
+    for anime in df_anime.iterrows():
+        if anime[1]["Name"] in resultado:
+            resultado_list.append(anime[1])
+
+    return {"animes": resultado_list}

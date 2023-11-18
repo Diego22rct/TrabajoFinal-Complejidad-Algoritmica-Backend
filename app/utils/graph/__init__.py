@@ -124,7 +124,8 @@ class Grafo:
             y = self.find(parent, v)
             if x != y:
                 e = e + 1
-                result.append((u, v, w))
+                result.append(u)
+                result.append(v)
                 self.union(parent, rank, x, y)
                 idx += 1
         return result
