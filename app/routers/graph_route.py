@@ -64,8 +64,6 @@ async def setup():
     """
     resultado = grafo.kruskal()
 
-    print(resultado)
-
     resultado_list = []
     for anime in df_anime.iterrows():
         if anime[1]["Name"] in resultado:
