@@ -11,17 +11,6 @@ total_cargado = grafo.import_graph_from_file("app/assets/graph__file/grafo_anime
 router = APIRouter()
 
 
-@router.get("/graph")
-async def get_graph():
-    """
-    Returns a dictionary containing the graph data.
-
-    Returns:
-    dict: A dictionary containing the graph data.
-    """
-    return {"graph": total_cargado}
-
-
 @router.get("/anime/two_recomend/{start}/{end}")
 async def dijkstra_shortest_path(start, end):
     """
