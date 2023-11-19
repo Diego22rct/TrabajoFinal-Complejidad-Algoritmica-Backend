@@ -1,11 +1,9 @@
 from fastapi import APIRouter
 import pandas as pd
-from app.utils.graph import Grafo
+from .data import grafo, df_anime
 from .index import df_anime
 
-grafo = Grafo()
 
-total_cargado = grafo.import_graph_from_file("app/assets/graph__file/grafo_anime.csv")
 # print(total_cargado)
 # grafo.print_graph()
 
