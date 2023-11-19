@@ -16,6 +16,9 @@ class Grafo:
         self.graph[origen][fin] = peso
         self.graph[fin][origen] = peso
 
+    def return_all_nodes(self):
+        return list(self.graph.keys())
+
     def print_graph(self):
         print("Grafo:")
         for indice_linea, node in enumerate(self.graph, start=1):

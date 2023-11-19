@@ -1,5 +1,4 @@
 from fastapi import APIRouter
-import pandas as pd
 from .data import grafo, df_anime
 from .index import df_anime
 

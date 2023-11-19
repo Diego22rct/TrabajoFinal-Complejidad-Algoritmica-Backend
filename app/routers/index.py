@@ -1,8 +1,7 @@
 from fastapi import APIRouter
-from .data import grafo, df_anime
+from .data import grafo, df_anime, lista_generos
 from .graph_route import grafo
-
-# numero_de_animes = 10000
+from difflib import get_close_matches
 
 
 def search_anime(anime_name: str):
@@ -87,9 +86,27 @@ async def anime_genre(genre: str):
     Returns:
     - dict: Un diccionario con la lista de animes que pertenecen al genero especificado.
     """
+    # concidir el genre con el de la lista de generos
+    genre_similares = get_close_matches(genre, lista_generos, cutoff=0.5)
+    print(genre_similares)
+
+    if not genre_similares:
+        return {"error": "Genero no encontrado"}
+    genre_similares = genre_similares[0]
+
     list_animes = []
-    for index, row in df_anime.iterrows():
-        if genre in row["Genres"] and row["Name"] in grafo.graph:
-            list_animes.append(row)
-            print(row["Name"])
+    nodos = grafo.return_all_nodes()
+    for nodo in range(len(nodos)):
+        # Corregir la condición para verificar si el género buscado está presente en los géneros del anime
+        anime_name = nodos[nodo]  # Obtener el nombre del anime del nodo
+        if genre_similares in df_anime[df_anime["Name"] == anime_name]["Genres"].values:
+            list_animes.append(
+                df_anime[df_anime["Name"] == anime_name].iloc[0].to_dict()
+            )
+
+    print("canidad de animes encontrados -> ", len(list_animes))
+
+    if not list_animes:
+        return {"error": "No se encontraron animes"}
+
     return {"animes": list_animes}
