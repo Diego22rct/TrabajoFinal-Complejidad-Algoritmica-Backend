@@ -1,17 +1,8 @@
 from fastapi import APIRouter
-import pandas as pd
-
-# from .graph_route import grafo
-from . import graph_route as graph_router
+from .data import grafo, df_anime
+from .graph_route import grafo
 
 # numero_de_animes = 10000
-
-df_anime = pd.read_csv(
-    "app/assets/dataset/anime-dataset-2023.csv",
-    encoding="utf-8",
-)
-print("Tamaño del dataset: ", df_anime.shape)
-print("Dataset cargado correctamente")
 
 
 def search_anime(anime_name: str):
@@ -98,8 +89,7 @@ async def anime_genre(genre: str):
     """
     list_animes = []
     for index, row in df_anime.iterrows():
-        if genre in row["Genres"]:
+        if genre in row["Genres"] and row["Name"] in grafo.graph:
             list_animes.append(row)
-    if len(list_animes) == 0:
-        return {"error": "Genero no encontrado"}
-    return {"animes " + genre: list_animes}
+            print(row["Name"])
+    return {"animes": list_animes}
