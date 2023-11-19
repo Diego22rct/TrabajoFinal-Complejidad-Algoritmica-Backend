@@ -11,3 +11,14 @@ df_anime = pd.read_csv(
 )
 print("Tamaño del dataset: ", df_anime.shape)
 print("Dataset cargado correctamente")
+
+all_genres = df_anime["Genres"].str.split(", ")
+lista_generos = []
+
+for genres in all_genres:
+    for genre in genres:
+        if genre not in lista_generos:
+            lista_generos.append(genre)
+
+print("Generos cargados correctamente")
+print("Generos: ", lista_generos)
