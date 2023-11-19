@@ -1,5 +1,5 @@
 import pandas as pd
-from typing import Dict, List, Tuple
+from typing import List, Tuple
 
 
 class Grafo:
