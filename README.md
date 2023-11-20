@@ -2,11 +2,11 @@
 
 Para este proyecto usamos grafos no dirigidos y usamos las oponderaciones para representar las relaciones entre animes y asi tener la posibilidad de recomendar animes.
 
-## Installation
+## Instalación
 
-To install the application, you need to have Python 3.6 or higher installed on your machine. You also need to have Poetry installed. If you don't have Poetry, you can install it by following the instructions on the [official Poetry website](https://python-poetry.org/docs/#installation).
+Para instalar la aplicación, necesita tener Python 3.6 o superior instalado en su máquina. También necesita tener Poetry instalado. Si no tiene Poetry, puede instalarlo siguiendo las instrucciones en el [sitio web oficial de Poetry](https://python-poetry.org/docs/#installation).
 
-Once you have Python and Poetry installed, you can install the application by cloning the repository and installing the dependencies:
+Una vez que tenga Python y Poetry instalados, puede instalar la aplicación clonando el repositorio e instalando las dependencias:
 
 ```bash
 git clone https://github.com/Diego22rct/TrabajoFinal-Complejidad-Algoritmica-Backend.git
@@ -14,19 +14,18 @@ cd TrabajoFinal-Complejidad-Algoritmica-Backend
 poetry install
 ```
 
-## Usage
+## Uso
 
-To run the application, use the following command:
 
 ```bash
 poetry run uvicorn app.main:app --reload
 ```
 
-This will start the application on `http://localhost:8000`.
+se abrirá en:  `http://localhost:8000`.
 
 ## Testing
 
-To run the tests, use the following command:
+Para correrlos test, use el siguiente comando:
 
 ```bash
 poetry run pytest
